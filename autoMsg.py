@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver import ActionChains
+from selenium.common.exceptions import NoSuchElementException
 
 # Set up Chrome options with user data directory, replace with applicable path
 options = Options()
@@ -44,11 +45,15 @@ for i in range(total_listings):
     time.sleep(5)
 
     # Find message box and send
-    message_box = driver.find_element(By.ID, "message")
-    message_box.clear()
-    message_box.send_keys("test search")
-    send_btn = driver.find_element(By.XPATH, "//button[contains(text(), 'Send message')]")
-    send_btn.click()
+    try:
+        message_box = driver.find_element(By.ID, "message")
+        message_box.clear()
+        message_box.send_keys("Hello! In need of machinery for your project? We've got you covered with a fleet of 2023 Bobcat MT100 available for rent at $200/day. Reach out at 2262222210 to book yours!")
+        send_btn = driver.find_element(By.XPATH, "//button[contains(text(), 'Send message')]")
+        send_btn.click()
+        time.sleep(5)
+    except: NoSuchElementException
+       
 
     # Close tab
     driver.close()
